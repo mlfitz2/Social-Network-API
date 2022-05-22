@@ -2,6 +2,7 @@
 const { Thought, User } = require('../models');
 
 const thoughtController = {
+  //get all thoughts
   getAllThoughts(req, res) {
     Thought.find({})
       .populate({
@@ -15,12 +16,14 @@ const thoughtController = {
         res.status(400).json(err);
       });
   },
+
+//get thought by ID
   getThoughtById({ params }, res) {
     Thought.findOne({ _id: params.id })
       .then((results) => {
         if (!results) {
           res.status(404).json({
-            message: 'No results found with that ID, please try again',
+            message: 'No results found based on that ID',
           });
           return;
         }
@@ -31,6 +34,8 @@ const thoughtController = {
         res.status(400).json(err);
       });
   },
+
+  //create new thought
   createThought({ body }, res) {
     Thought.create(body)
       .then((results) => {
@@ -44,26 +49,30 @@ const thoughtController = {
         if (!results) {
           res
             .status(404)
-            .json({ message: 'No user found, try again with different ID' });
+            .json({ message: 'No results found based on that ID' });
           return;
         }
         res.json(results);
       })
       .catch((err) => res.json(err));
   },
+
+  //Update thought
   updateThought({ params, body }, res) {
     Thought.findOneAndUpdate({ _id: params.id }, body, { new: true })
       .then((results) => {
         if (!results) {
           res
             .status(404)
-            .json({ message: 'No user found, try again with different ID' });
+            .json({ message: 'No results found based on that ID' });
           return;
         }
         res.json(results);
       })
       .catch((err) => res.status(400).json(err));
   },
+
+  //delete thought
   deleteThought({ params }, res) {
     Thought.findOneAndDelete({ _id: params.id })
       .then((results) => {
@@ -77,6 +86,8 @@ const thoughtController = {
       })
       .catch((err) => res.status(400).json(err));
   },
+
+  //add reaction
   addReaction({ params, body }, res) {
     Thought.findOneAndUpdate(
       { _id: params.thoughtId },
@@ -94,6 +105,7 @@ const thoughtController = {
       .catch((err) => res.status(400).json(err));
   },
 
+  //delete reaction
   deleteReaction({ params }, res) {
     Thought.findOneAndUpdate(
       { _id: params.thoughtId },
