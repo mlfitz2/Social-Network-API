@@ -78,7 +78,7 @@ const thoughtController = {
       .then((results) => {
         if (!results) {
           res.status(404).json({
-            message: 'No results found with that ID, try a different one',
+            message: 'No results found based on that ID',
           });
           return;
         }
@@ -98,7 +98,7 @@ const thoughtController = {
         if (!results) {
           res
             .status(404)
-            .json({ message: 'No results found, try again with different ID' });
+            .json({ message: 'No results found based on that ID' });
         }
         res.json(results);
       })

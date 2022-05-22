@@ -3,6 +3,7 @@ const { User } = require('../models');
 
 
 const userController = {
+  //get all users
   getAllUsers(req, res) {
     User.find({})
       .populate({
@@ -17,6 +18,7 @@ const userController = {
       .then((results) => res.json(results))
       .catch((err) => res.status(500).json(err))
   },
+  //get user by id
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
       .populate({
@@ -28,7 +30,7 @@ const userController = {
         if (!results) {
           res.status(404).json({
             message:
-              'No user with that ID found, try again with different ID please.',
+              'No results found based on that ID',
           });
           return;
         }
@@ -39,37 +41,41 @@ const userController = {
         res.status(400).json(err);
       });
   },
+  //create user
   createUser({ body }, res) {
     User.create(body)
       .then((results) => res.json(results))
       .catch((err) => res.status(400).json(err));
   },
+  //update user
   updateUser({ params, body }, res) {
     User.findOneAndUpdate({ _id: params.id }, body, { new: true })
       .then((results) => {
         if (!results) {
           res
             .status(404)
-            .json({ message: 'No user with that ID found, try again!' });
+            .json({ message: 'No results found based on that ID' });
           return;
         }
         res.json(results);
       })
       .catch((err) => res.status(400).json(err));
   },
+  //delete user
   deleteUser({ params }, res) {
     User.findOneAndDelete({ _id: params.id })
       .then((results) => {
         if (!results) {
           res
             .status(404)
-            .json({ message: 'No user with that ID found, try again' });
+            .json({ message: 'No results found based on that ID' });
           return;
         }
         res.json(results);
       })
       .catch((err) => res.status(400).json(err));
   },
+  //add friend
   addFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.id },
@@ -79,6 +85,7 @@ const userController = {
       .then((results) => res.status(200).json(results))
       .catch((err) => res.status(400).json(err));
   },
+  //delete friend
   deleteFriend({ params }, res) {
     User.findOneAndUpdate(
       { _id: params.id },
@@ -89,7 +96,7 @@ const userController = {
         if (!results) {
           res
             .status(404)
-            .json({ message: 'No results found with that ID, try again' });
+            .json({ message: 'No results found based on that ID' });
           return;
         }
         res.json(results);

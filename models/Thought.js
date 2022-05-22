@@ -27,6 +27,7 @@ const reactionSchema = new Schema(
   }
 );
 
+//schema for Thoughts
 const thoughtSchema = new Schema(
   {
     thoughtText: {
