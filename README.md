@@ -9,3 +9,5 @@ This app follows the basic framework of a social network's API. Although this pr
 ## Technologies
 
 This app uses MongoDB and Mongoose as the database to store the user's info, Express for the node framework, and JavaScript to code out the functionality. It was tested in Postman (but could also be tested through Insomnia).
+
+## Walkthrough Video
